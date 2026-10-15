@@ -1,0 +1,16 @@
+name: LadyCraftPlugin
+version: '${version}'
+
+main: fr.colddestructor.ladyCraftPlugin.LadyCraftPlugin
+api-version: '26.2'
+load: POSTWORLD
+
+commands:
+  chatgame:
+    description: Trigger the game chat
+    permission: chatgame.use
+    usage: /chatgame
+  lcreload:
+    description: reload the plugin
+    permission: lcreload.use
+    usage: /lcreload
