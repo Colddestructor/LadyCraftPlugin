@@ -2,6 +2,7 @@ package fr.colddestructor.ladyCraftPlugin.listener;
 
 import fr.colddestructor.ladyCraftPlugin.game.ChatGame;
 import fr.colddestructor.ladyCraftPlugin.helper.TextBuilder;
+import fr.colddestructor.ladyCraftPlugin.manager.PlayerData;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
@@ -10,6 +11,8 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+
+import java.util.Random;
 
 public class ChatGameListener implements Listener {
 
@@ -32,6 +35,16 @@ public class ChatGameListener implements Listener {
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.sendMessage(message);
         }
+
+        Random rand = new Random();
+        int newAura = rand.nextInt(1, 3);
+        PlayerData playerData = PlayerData.getPlayerData(player);
+        playerData.addAura(newAura);
+
+        player.sendMessage(TextBuilder.create()
+                .append(TextBuilder.pluginName())
+                .text(" + " + newAura + " aura(s)", TextBuilder.GREEN)
+                .build());
         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 2f);
     }
 }

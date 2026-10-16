@@ -2,7 +2,6 @@ package fr.colddestructor.ladyCraftPlugin.helper;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.w3c.dom.Text;
 
 public final class TextBuilder {
 
@@ -52,9 +51,9 @@ public final class TextBuilder {
         return TextBuilder.create()
                 .text("┏", GREEN)
                 .text(BORDER, GREEN)
-                .text("[", PINK)
+                .text("[", WHITE)
                 .bold("LadyCraftPlugin", PINK)
-                .text("]", PINK)
+                .text("]", WHITE)
                 .text(BORDER, GREEN)
                 .text("┓", GREEN)
                 .build();

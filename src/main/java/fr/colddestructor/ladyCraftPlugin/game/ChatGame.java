@@ -4,6 +4,7 @@ import fr.colddestructor.ladyCraftPlugin.LadyCraftPlugin;
 import fr.colddestructor.ladyCraftPlugin.helper.TextBuilder;
 import fr.colddestructor.ladyCraftPlugin.helper.YamlHelper;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -43,18 +44,26 @@ public class ChatGame {
         chatGameActive = true;
         selectedWord = words.get(random.nextInt(words.size()));
 
+        String plainText = PlainTextComponentSerializer.plainText().serialize(TextBuilder.header());
+        int MaxLength = plainText.length();
+        int spaceAmount = MaxLength/2 - selectedWord.length()/2;
+
         Component content = TextBuilder.create()
                 .newLine()
-                .text("                  Le premier à marquer le mot : ", GREEN)
+                .text(" ".repeat(15) + "Le/La premier(e) à marquer le mot :", GREEN)
                 .newLine()
-                .bold("                          " + selectedWord, ORANGE)
                 .newLine()
-                .text("                                 a gagné !", GREEN)
+                .bold(" ".repeat(spaceAmount) + selectedWord, ORANGE)
+                .newLine()
+                .newLine()
+                .text(" ".repeat(32) + "a gagné !", GREEN)
                 .build();
 
         Component message = TextBuilder.create()
                 .append(TextBuilder.header())
+                .newLine()
                 .append(content)
+                .newLine()
                 .append(TextBuilder.footer())
                 .build();
 
@@ -84,7 +93,6 @@ public class ChatGame {
         if (state){
             ChatGame.chatGame = new ChatGame(0, true, new ArrayList<>()); // Only setup, doesn't matter
             YamlHelper.reloadChatGameConfig();
-            plugin.getLogger().warning(chatGame.toString());
             ChatGame.chatGame.playTimer();
             plugin.getLogger().info("ChatGame successfully enabled");
         } else {

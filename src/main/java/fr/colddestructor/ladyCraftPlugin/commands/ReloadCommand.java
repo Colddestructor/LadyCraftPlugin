@@ -16,6 +16,8 @@ public class ReloadCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String @NotNull [] strings) {
         YamlHelper.reloadMainConfig();
 
+        YamlHelper.reloadPlayerData();
+
         ChatGame.setupChatGame(plugin);
         YamlHelper.reloadChatGameConfig();
 
@@ -23,7 +25,7 @@ public class ReloadCommand implements CommandExecutor {
         if (commandSender instanceof Player player){
             player.sendMessage(TextBuilder.create()
                     .append(TextBuilder.pluginName())
-                    .text("LadyCraftPlugin reloaded successfully !", TextBuilder.GREEN).build());
+                    .text(" LadyCraftPlugin reloaded successfully !", TextBuilder.GREEN).build());
         }
         return true;
     }

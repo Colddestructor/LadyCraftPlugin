@@ -14,3 +14,7 @@ commands:
     description: reload the plugin
     permission: lcreload.use
     usage: /lcreload
+  auralist:
+    description: give the player name and the associate aura amount (only connected players)
+    permission: auralist.use
+    usage: /auralist

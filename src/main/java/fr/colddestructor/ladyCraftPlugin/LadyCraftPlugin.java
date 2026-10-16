@@ -2,7 +2,10 @@ package fr.colddestructor.ladyCraftPlugin;
 
 import fr.colddestructor.ladyCraftPlugin.game.ChatGame;
 import fr.colddestructor.ladyCraftPlugin.helper.YamlHelper;
+import fr.colddestructor.ladyCraftPlugin.manager.PlayerData;
 import fr.colddestructor.ladyCraftPlugin.manager.RegisterManager;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class LadyCraftPlugin extends JavaPlugin {
@@ -23,6 +26,8 @@ public class LadyCraftPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            YamlHelper.savePlayerData(PlayerData.getPlayerData(player));
+        }
     }
 }
