@@ -1,5 +1,6 @@
 package fr.colddestructor.ladyCraftPlugin.helper;
 
+import fr.colddestructor.ladyCraftPlugin.commands.AuraListCommand;
 import fr.colddestructor.ladyCraftPlugin.game.ChatGame;
 import fr.colddestructor.ladyCraftPlugin.manager.PlayerData;
 import net.kyori.adventure.text.Component;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Player;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
 import java.util.List;
 
 import static fr.colddestructor.ladyCraftPlugin.LadyCraftPlugin.plugin;
@@ -80,6 +82,7 @@ public final class YamlHelper {
             savePlayerData(playerData);
         }
         PlayerData.playerDataList.clear();
+        AuraListCommand.auraList.clear();
 
         File file = new File(plugin.getDataFolder(), "player-data.yml");
         final YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
@@ -92,6 +95,11 @@ public final class YamlHelper {
                section.set("aura-count", 0);
             }
         } else {
+            for (String key :  configuration.getKeys(false)) {
+                ConfigurationSection playerData = configuration.getConfigurationSection(key);
+                assert playerData != null;
+                AuraListCommand.auraList.put(playerData.getString("name"), playerData.getInt("aura-count"));
+            }
             for (Player player : Bukkit.getOnlinePlayers()){
                 PlayerData playerData = new PlayerData(player);
                 ConfigurationSection section = configuration.getConfigurationSection(player.getUniqueId().toString());
@@ -143,6 +151,7 @@ public final class YamlHelper {
 
         assert section != null;
         section.set("aura-count", playerData.getAuraCount());
+        section.set("name", playerData.getPlayer().getName());
         saveYaml(playerDataConfig, "player-data.yml");
     }
 

@@ -11,10 +11,22 @@ commands:
     permission: chatgame.use
     usage: /chatgame
   lcreload:
-    description: reload the plugin
+    description: Reload the plugin
     permission: lcreload.use
     usage: /lcreload
   auralist:
-    description: give the player name and the associate aura amount (only connected players)
+    description: Give the player name and the associate aura amount (only connected players)
     permission: auralist.use
     usage: /auralist
+  aurarank:
+    description: Give the targeted player aura count
+    permission: aurarank.use
+    usage: /aurarank (pseudo)
+  addword:
+    description: Add a new word to the ChatGame word list
+    permission: addword.use
+    usage: /addword [word]
+  delword:
+    description: Delete a word in the ChatGame word list
+    permission: delword.use
+    usage: /delword [word]

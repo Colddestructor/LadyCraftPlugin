@@ -8,6 +8,7 @@ public final class TextBuilder {
     public static final TextColor GREEN = TextColor.color(0x55FF55);
     public static final TextColor PINK = TextColor.color(0xFF55FF);
     public static final TextColor ORANGE = TextColor.color(0xFFAA00);
+    public static final TextColor RED = TextColor.color(0xa10202);
     public static final TextColor WHITE = TextColor.color(0xFFFFFF);
 
     private static final String BORDER = "━━━━━━━━━━━━━━━━━━━━";

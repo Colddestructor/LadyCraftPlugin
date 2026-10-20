@@ -1,0 +1,17 @@
+v1.2
+    ✓ Auralist :
+        - plus joli
+        - affiche top 5 et rang de la personne
+    Scoreboard :
+       - affiche rang aura
+       - affiche aura totale
+       - affiche temps de jeu
+    Jump :
+       - no fall
+
+    ✓ Commande : Ajouter mot dans le chat
+    ✓ Commande : Supprimer mot dans le chat
+    ✓ Commande : Aura rank -> donne ton rang (ou le rang de qqn d'autre)
+
+v1.3
+    - (Aura fly ?)

@@ -19,6 +19,7 @@ public class LadyCraftPlugin extends JavaPlugin {
         new RegisterManager(plugin).register();
 
         YamlHelper.reloadMainConfig();
+        YamlHelper.reloadPlayerData();
         ChatGame.setupChatGame(plugin);
         YamlHelper.firstLoadConfig = false;
 
