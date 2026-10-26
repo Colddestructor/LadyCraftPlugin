@@ -2,17 +2,18 @@ package fr.colddestructor.ladyCraftPlugin.helper;
 
 import fr.colddestructor.ladyCraftPlugin.commands.AuraListCommand;
 import fr.colddestructor.ladyCraftPlugin.game.ChatGame;
+import fr.colddestructor.ladyCraftPlugin.game.JumpGame;
 import fr.colddestructor.ladyCraftPlugin.manager.PlayerData;
+import fr.colddestructor.ladyCraftPlugin.manager.ScoreboardManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static fr.colddestructor.ladyCraftPlugin.LadyCraftPlugin.plugin;
@@ -57,20 +58,88 @@ public final class YamlHelper {
         saveYaml(configuration, "config.yml");
     }
 
+    public static void reloadJumpGameConfig(){
+        File file = new File(plugin.getDataFolder(), "config.yml");
+        final YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
+
+        if (firstLoadConfig){
+            ConfigurationSection section2 = configuration.createSection("jump-game");
+            section2.set("enabled", true);
+            ConfigurationSection sectionJumpPos1 = section2.createSection("region-pos1");
+            sectionJumpPos1.set("x", 0);
+            sectionJumpPos1.set("y", 0);
+            sectionJumpPos1.set("z", 0);
+
+            ConfigurationSection sectionJumpPos2 = section2.createSection("region-pos2");
+            sectionJumpPos2.set("x", 0);
+            sectionJumpPos2.set("y", 0);
+            sectionJumpPos2.set("z", 0);
+
+            ConfigurationSection sectionJumpStart = section2.createSection("start");
+            sectionJumpStart.set("x", 0);
+            sectionJumpStart.set("y", 0);
+            sectionJumpStart.set("z", 0);
+
+            ConfigurationSection sectionJumpEnd = section2.createSection("end");
+            sectionJumpEnd.set("x", 0);
+            sectionJumpEnd.set("y", 0);
+            sectionJumpEnd.set("z", 0);
+        } else {
+
+            ConfigurationSection section2 = configuration.getConfigurationSection("jump-game");
+            assert section2 != null;
+            JumpGame.isEnabled = section2.getBoolean("enabled");
+
+            JumpGame.RegionPos1 = new ArrayList<>();
+            ConfigurationSection sectionJumpPos1 = section2.getConfigurationSection("region-pos1");
+            assert sectionJumpPos1 != null;
+            JumpGame.RegionPos1.add(sectionJumpPos1.getInt("x"));
+            JumpGame.RegionPos1.add(sectionJumpPos1.getInt("y"));
+            JumpGame.RegionPos1.add(sectionJumpPos1.getInt("z"));
+
+            JumpGame.RegionPos2 = new ArrayList<>();
+            ConfigurationSection sectionJumpPos2 = section2.getConfigurationSection("region-pos2");
+            assert sectionJumpPos2 != null;
+            JumpGame.RegionPos2.add(sectionJumpPos2.getInt("x"));
+            JumpGame.RegionPos2.add(sectionJumpPos2.getInt("y"));
+            JumpGame.RegionPos2.add(sectionJumpPos2.getInt("z"));
+
+            JumpGame.Start = new ArrayList<>();
+            ConfigurationSection sectionJumpStart = section2.getConfigurationSection("start");
+            assert sectionJumpStart != null;
+            JumpGame.Start.add(sectionJumpStart.getInt("x"));
+            JumpGame.Start.add(sectionJumpStart.getInt("y"));
+            JumpGame.Start.add(sectionJumpStart.getInt("z"));
+
+            JumpGame.End = new ArrayList<>();
+            ConfigurationSection sectionJumpEnd = section2.getConfigurationSection("end");
+            assert sectionJumpEnd != null;
+            JumpGame.End.add(sectionJumpEnd.getInt("x"));
+            JumpGame.End.add(sectionJumpEnd.getInt("y"));
+            JumpGame.End.add(sectionJumpEnd.getInt("z"));
+        }
+        saveYaml(configuration, "config.yml");
+
+    }
+
     public static void reloadMainConfig(){
 
         File file = new File(plugin.getDataFolder(), "config.yml");
         final YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
 
-        ChatGame.state = true;
+        ChatGame.isEnabled = true;
         if (file.length() == 0){
             firstLoadConfig = true;
             ConfigurationSection section = configuration.createSection("chat-game");
             section.set("enabled", true);
+
+            configuration.set("scoreboard-reload-time", ScoreboardManager.reloadScoreBoardTime);
         } else {
             ConfigurationSection section = configuration.getConfigurationSection("chat-game");
             assert section != null;
-            ChatGame.state = section.getBoolean("enabled");
+            ChatGame.isEnabled = section.getBoolean("enabled");
+
+            ScoreboardManager.reloadScoreBoardTime = configuration.getLong("scoreboard-reload-time");
         }
         saveYaml(configuration, "config.yml");
 
@@ -134,6 +203,41 @@ public final class YamlHelper {
             }
         }
         saveYaml(configuration, "player-data.yml");
+    }
+
+    public static void saveJumpData() {
+        File file = new File(plugin.getDataFolder(), "config.yml");
+        final YamlConfiguration configuration = YamlConfiguration.loadConfiguration(file);
+
+        ConfigurationSection section2 = configuration.getConfigurationSection("jump-game");
+        assert section2 != null;
+        section2.set("enabled", true);
+
+        ConfigurationSection sectionJumpPos1 = section2.getConfigurationSection("region-pos1");
+        assert sectionJumpPos1 != null;
+        sectionJumpPos1.set("x", JumpGame.RegionPos1.getFirst());
+        sectionJumpPos1.set("y", JumpGame.RegionPos1.get(1));
+        sectionJumpPos1.set("z", JumpGame.RegionPos1.getLast());
+
+        ConfigurationSection sectionJumpPos2 = section2.getConfigurationSection("region-pos2");
+        assert sectionJumpPos2 != null;
+        sectionJumpPos2.set("x", JumpGame.RegionPos2.getFirst());
+        sectionJumpPos2.set("y", JumpGame.RegionPos2.get(1));
+        sectionJumpPos2.set("z", JumpGame.RegionPos2.getLast());
+
+        ConfigurationSection sectionJumpStart = section2.getConfigurationSection("start");
+        assert sectionJumpStart != null;
+        sectionJumpStart.set("x", JumpGame.Start.getFirst());
+        sectionJumpStart.set("y", JumpGame.Start.get(1));
+        sectionJumpStart.set("z", JumpGame.Start.getLast());
+
+        ConfigurationSection sectionJumpEnd = section2.getConfigurationSection("end");
+        assert sectionJumpEnd != null;
+        sectionJumpEnd.set("x", JumpGame.End.getFirst());
+        sectionJumpEnd.set("y", JumpGame.End.get(1));
+        sectionJumpEnd.set("z", JumpGame.End.getLast());
+
+        saveYaml(configuration, "config.yml");
     }
 
     public static void savePlayerData(PlayerData playerData){

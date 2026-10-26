@@ -3,7 +3,9 @@ package fr.colddestructor.ladyCraftPlugin.manager;
 import fr.colddestructor.ladyCraftPlugin.LadyCraftPlugin;
 import fr.colddestructor.ladyCraftPlugin.commands.*;
 import fr.colddestructor.ladyCraftPlugin.listener.ChatGameListener;
-import fr.colddestructor.ladyCraftPlugin.listener.PlayerDataListener;
+import fr.colddestructor.ladyCraftPlugin.listener.JumpGameListener;
+import fr.colddestructor.ladyCraftPlugin.listener.PlayerDeathListener;
+import fr.colddestructor.ladyCraftPlugin.listener.PlayerJoinQuitListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 
@@ -26,7 +28,9 @@ public final class RegisterManager {
     public void registerEvents(){
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new ChatGameListener(), this.plugin);
-        pluginManager.registerEvents(new PlayerDataListener(), this.plugin);
+        pluginManager.registerEvents(new PlayerJoinQuitListener(), this.plugin);
+        pluginManager.registerEvents(new PlayerDeathListener(), this.plugin);
+        pluginManager.registerEvents(new JumpGameListener(), this.plugin);
     }
 
     public void  registerCommands(){
@@ -36,6 +40,7 @@ public final class RegisterManager {
         Objects.requireNonNull(this.plugin.getCommand("aurarank")).setExecutor(new AuraRankCommand());
         Objects.requireNonNull(this.plugin.getCommand("addword")).setExecutor(new AddWordCommand());
         Objects.requireNonNull(this.plugin.getCommand("delword")).setExecutor(new DelWordCommand());
+        Objects.requireNonNull(this.plugin.getCommand("jumpregion")).setExecutor(new JumpRegionCommand());
     }
 
 }

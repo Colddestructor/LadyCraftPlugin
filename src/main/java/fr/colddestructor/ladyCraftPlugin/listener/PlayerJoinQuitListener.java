@@ -2,13 +2,14 @@ package fr.colddestructor.ladyCraftPlugin.listener;
 
 import fr.colddestructor.ladyCraftPlugin.helper.YamlHelper;
 import fr.colddestructor.ladyCraftPlugin.manager.PlayerData;
+import fr.colddestructor.ladyCraftPlugin.manager.ScoreboardManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-public class PlayerDataListener implements Listener {
+public class PlayerJoinQuitListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event){
@@ -16,6 +17,11 @@ public class PlayerDataListener implements Listener {
 
         new PlayerData(player);
         YamlHelper.reloadTargetPlayerData(player);
+
+        ScoreboardManager.createScoreboardPlayer(player);
+        ScoreboardManager.updateDeathCount(player);
+        ScoreboardManager.updateTimePlayed(player);
+        ScoreboardManager.updateAura(player);
     }
 
     @EventHandler

@@ -24,7 +24,7 @@ public class ChatGame {
     boolean isRandomTiming;
     List<String> words;
 
-    public static boolean state;
+    public static boolean isEnabled;
     public static ChatGame chatGame;
 
     public static long askQuestionTime = 0L;
@@ -90,7 +90,7 @@ public class ChatGame {
     }
 
     public static void setupChatGame(LadyCraftPlugin plugin){
-        if (state){
+        if (isEnabled){
             ChatGame.chatGame = new ChatGame(0, true, new ArrayList<>()); // Only setup, doesn't matter
             YamlHelper.reloadChatGameConfig();
             ChatGame.chatGame.playTimer();

@@ -30,3 +30,7 @@ commands:
     description: Delete a word in the ChatGame word list
     permission: delword.use
     usage: /delword [word]
+  jumpregion:
+    description: Set the limit positions for the no fall region
+    permission: jumpregion.use
+    usage: /jumpregion [pos1/pos2/start/end]

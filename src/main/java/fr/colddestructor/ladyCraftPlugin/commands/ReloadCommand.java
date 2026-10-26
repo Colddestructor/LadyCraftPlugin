@@ -20,6 +20,7 @@ public class ReloadCommand implements CommandExecutor {
 
         ChatGame.setupChatGame(plugin);
         YamlHelper.reloadChatGameConfig();
+        YamlHelper.reloadJumpGameConfig();
 
         YamlHelper.firstLoadConfig = false;
         if (commandSender instanceof Player player){

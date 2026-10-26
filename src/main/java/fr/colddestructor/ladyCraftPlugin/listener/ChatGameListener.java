@@ -1,8 +1,10 @@
 package fr.colddestructor.ladyCraftPlugin.listener;
 
+import fr.colddestructor.ladyCraftPlugin.commands.AuraListCommand;
 import fr.colddestructor.ladyCraftPlugin.game.ChatGame;
 import fr.colddestructor.ladyCraftPlugin.helper.TextBuilder;
 import fr.colddestructor.ladyCraftPlugin.manager.PlayerData;
+import fr.colddestructor.ladyCraftPlugin.manager.ScoreboardManager;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
@@ -40,6 +42,8 @@ public class ChatGameListener implements Listener {
         int newAura = rand.nextInt(1, 3);
         PlayerData playerData = PlayerData.getPlayerData(player);
         playerData.addAura(newAura);
+        AuraListCommand.auraList.put(player.getName(), playerData.getAuraCount());
+        ScoreboardManager.updateAura(player);
 
         player.sendMessage(TextBuilder.create()
                 .append(TextBuilder.pluginName())
